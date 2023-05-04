@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body {
+      background: linear-gradient(-60deg, #ea8d8d, #a890fe, #2e3192, #1bffff);
+      background-size: 400% 400%;
+      animation: gradient 30s ease infinite;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+  <title>KeenSkin</title>
+</head>
+
+<body>
+  <center>
+    <h1 style="text-align:center; margin-top:20px; font-size:60px; color:#000000;"> Skin Lesion Detector</h1>
+  </center>
+  <center>
+    <p style="text-align:center; margin-top:20px; font-size: 15px; color:#000000;">
+      *At KeenSkin, our mission is to provide a convenient and accessible way for people to detect skin cancer early on. 
+	</br> Our web application is designed to be user-friendly and easy to use.
+	</br> By using our application, you can have peace of mind knowing that you are taking an important step towards maintaining your skin health.
+	</br> We encourage you to use our application regularly and consult with a healthcare professional if you have any concerns. 
+	</br> Remember, early detection is key in preventing and treating skin cancer.
+    </p>
+  </center>
+  <div class="center">
+    <form id="upload-file" action="/predict" method="POST" enctype="multipart/form-data">
+      <div class="form-input">
+        <div class="preview">
+          <img id="file-ip-1-preview">
+        </div>
+        <label for="file-ip-1">Upload Skin Lesion Image</label>
+        <input type="file" name="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+        <input type="submit" class="btn-prev" id="btn-display" name="submit" onclick="start(0)" value="Click here!">
+        <br><br>
+        <!-- <div id="loading-spinner" style="display:none;">
+			<centre><i class="fa fa-spinner fa-spin"></i><b>Click the predict button...</b></centre>
+		</div> -->
+      </div>
+    </form>
+  </div>
+  <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+
+<script type="text/javascript">
+  function showPreview(event){
+	if(event.target.files.length > 0){
+		var src = URL.createObjectURL(event.target.files[0]);
+		var preview = document.getElementById("file-ip-1-preview");
+		var prevbtn = document.getElementById("btn-display");
+		var spinner = document.getElementById("loading-spinner");
+		preview.src = src;
+		preview.style.display = "block";
+		prevbtn.style.display="block";
+		spinner.style.display="block"; // Show the spinner
+	}
+	}
+
+</script>
+
+<script type="text/javascript">
+  function start(al) {
+	var spinner = document.getElementById('loading-spinner');
+	spinner.style.display="block"; // Show the spinner
+	var sim = setTimeout(function() {
+		spinner.style.display="none"; // Hide the spinner
+		var finalMessage = document.getElementById('finalMessage');
+		finalMessage.innerHTML = "Process is complete";
+	}, 100);
+	}
+
+</script>
+</body>
+</html>
